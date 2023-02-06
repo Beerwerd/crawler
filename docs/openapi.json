@@ -1,0 +1,242 @@
+{
+  "openapi": "3.0.0",
+  "paths": {
+    "/api/manufacturers": {
+      "get": {
+        "operationId": "ManufacturerController_getList",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Manufacturer"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/manufacturers/{manufacturerId}/products": {
+      "get": {
+        "operationId": "ManufacturerController_getProductList",
+        "parameters": [
+          {
+            "name": "manufacturerId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Product"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/manufacturers/{manufacturerId}/parsing": {
+      "patch": {
+        "operationId": "ManufacturerController_parseManufacturer",
+        "parameters": [
+          {
+            "name": "manufacturerId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ParsingManufacturerDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Parsing"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/parsing/{parsingId}": {
+      "get": {
+        "operationId": "ParsingController_getData",
+        "parameters": [
+          {
+            "name": "parsingId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Parsing"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/products/{productId}": {
+      "get": {
+        "operationId": "ProductController_getList",
+        "parameters": [
+          {
+            "name": "productId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Product"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "info": {
+    "title": "Cround Compiler API",
+    "description": "Cround Compiler Structure API",
+    "version": "1.0",
+    "contact": {}
+  },
+  "tags": [],
+  "servers": [],
+  "components": {
+    "schemas": {
+      "Manufacturer": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "number"
+          },
+          "brand": {
+            "type": "string"
+          },
+          "url": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "brand",
+          "url"
+        ]
+      },
+      "Product": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "number"
+          },
+          "url": {
+            "type": "string"
+          },
+          "title": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "price": {
+            "type": "string"
+          },
+          "currency": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "url",
+          "title",
+          "name",
+          "price",
+          "currency"
+        ]
+      },
+      "ParsingManufacturerDto": {
+        "type": "object",
+        "properties": {}
+      },
+      "ParsingStatusEnum": {
+        "type": "string",
+        "enum": [
+          "pending",
+          "running",
+          "completed",
+          "error"
+        ]
+      },
+      "Parsing": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "number"
+          },
+          "status": {
+            "$ref": "#/components/schemas/ParsingStatusEnum"
+          },
+          "progress": {
+            "type": "number"
+          },
+          "error": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "status",
+          "progress",
+          "error"
+        ]
+      }
+    }
+  }
+}
